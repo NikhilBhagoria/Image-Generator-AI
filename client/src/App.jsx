@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       {/* <AuthProvider> */}
         <Header />
-        <main className="flex-grow">
+        <main className="grow">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/chat" element={<AIChat />} />

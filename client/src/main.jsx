@@ -6,6 +6,6 @@ import store from './store/index.js'
 
 createRoot(document.getElementById('root')).render(
     <Provider store={store}>
-    <App />
+        <App />
     </Provider>,
 )
