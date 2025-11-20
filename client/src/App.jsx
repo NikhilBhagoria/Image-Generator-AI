@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
-import AIChat from './pages/AIChat'
+import ChatInterface from './pages/ChatInterface'
 import ImageGenerator from './pages/ImageGenerator'
 import DocumentAnalyzer from './pages/DocumentAnalyzer'
 import Login from './pages/Login'
@@ -19,7 +19,7 @@ function App() {
         <main className="grow">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/chat" element={<AIChat />} />
+            <Route path="/chat" element={<ChatInterface />} />
             <Route path="/images" element={<ImageGenerator />} />
             <Route path="/documents" element={<DocumentAnalyzer />} />
             <Route path="/login" element={<Login />} />
