@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Send, Bot, User, Loader, Trash2, Copy } from 'lucide-react'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchChatHistory } from '../store/slices/userSlice.js'
 
 const ChatInterface = () => {
-  const [messages, setMessages] = useState([])
+  const dispatch = useDispatch();
+  const {chatHistory,loading, error} = useSelector((state) => state.user);
   const [inputMessage, setInputMessage] = useState('')
-  const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
-    fetchChatHistory()
-  }, [])
+    dispatch(fetchChatHistory())
+  }, [dispatch])
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [chatHistory])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })

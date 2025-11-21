@@ -25,6 +25,8 @@ dist-ssr
 
 # Miscellaneous
 .env
+.env.production
+.env.development
 .env.local
 .env.*.local
 .cache
