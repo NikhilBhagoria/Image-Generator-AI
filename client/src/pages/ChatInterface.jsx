@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Send, Bot, User, Loader, Trash2, Copy } from 'lucide-react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchChatHistory } from '../store/slices/userSlice.js'
+import { addMessage, fetchChatHistory } from '../store/slices/userSlice.js'
 
 const ChatInterface = () => {
   const dispatch = useDispatch();
@@ -22,20 +22,6 @@ const ChatInterface = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const fetchChatHistory = async () => {
-    try {
-      const response = await axios.get('/api/chat/history',{
-        headers: {
-          'Cache-Control': 'no-cache',
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        }
-      })
-      setMessages(response.data)
-    } catch (error) {
-      console.error('Failed to fetch chat history:', error)
-    }
-  }
 
   const sendMessage = async (e) => {
     e.preventDefault()
@@ -48,7 +34,7 @@ const ChatInterface = () => {
       timestamp: new Date()
     }
 
-    setMessages(prev => [...prev, userMessage])
+    dispatch(addMessage(userMessage));
     setInputMessage('')
     setLoading(true)
 
