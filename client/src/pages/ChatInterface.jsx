@@ -36,35 +36,8 @@ const ChatInterface = () => {
 
     dispatch(addMessage(userMessage));
     setInputMessage('')
-    setLoading(true)
 
-    try {
-      const response = await axios.post('/api/chat/send', {
-        message: inputMessage,
-        conversationHistory: messages
-      })
-
-      const aiMessage = {
-        id: Date.now() + 1,
-        text: response.data.reply,
-        sender: 'ai',
-        timestamp: new Date()
-      }
-
-      setMessages(prev => [...prev, aiMessage])
-    } catch (error) {
-      console.error('Failed to send message:', error)
-      const errorMessage = {
-        id: Date.now() + 1,
-        text: 'Sorry, I encountered an error. Please try again.',
-        sender: 'ai',
-        timestamp: new Date(),
-        isError: true
-      }
-      setMessages(prev => [...prev, errorMessage])
-    }
-
-    setLoading(false)
+    dispatch(sendMessage({ message: inputMessage, conversationHistory: chatHistory.concat(userMessage) }));
   }
 
   const clearChat = async () => {
