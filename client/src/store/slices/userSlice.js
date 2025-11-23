@@ -15,9 +15,9 @@ export const fetchChatHistory = createAsyncThunk(
 
 export const sendMessage = createAsyncThunk(
     'user/sendMessage',
-    async (message, { rejectWithValue }) => {
+    async ({ message, conversationHistory }, { rejectWithValue }) => {
         try {
-            const response = await axiosInstance.post('/chat/send', { message });
+            const response = await axiosInstance.post('/chat/send', { message,conversationHistory });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
