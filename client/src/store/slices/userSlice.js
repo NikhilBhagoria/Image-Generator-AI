@@ -25,6 +25,22 @@ export const sendMessage = createAsyncThunk(
     }
 );
 
+export const analyzeDocument = createAsyncThunk(
+    'user/analyzeDocument',
+    async (formData, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.post('/documents/analyze', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const initialState = {
     chatHistory: [],
     loading: false,
