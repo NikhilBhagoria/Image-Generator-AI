@@ -13,11 +13,23 @@ export const fetchChatHistory = createAsyncThunk(
     }
 );
 
-export const sendMessage = createAsyncThunk(
+export const messageSend = createAsyncThunk(
     'user/sendMessage',
     async ({ message, conversationHistory }, { rejectWithValue }) => {
         try {
             const response = await axiosInstance.post('/chat/send', { message,conversationHistory });
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const clearChatHistory = createAsyncThunk(
+    'user/clearChatHistory',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axiosInstance.delete('/chat/clear');
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
