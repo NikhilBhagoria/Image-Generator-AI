@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Send, Bot, User, Loader, Trash2, Copy } from 'lucide-react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { addMessage, fetchChatHistory } from '../store/slices/userSlice.js'
+import { addMessage, clearChatHistory, fetchChatHistory, messageSend } from '../store/slices/userSlice.js'
 
 const ChatInterface = () => {
   const dispatch = useDispatch();
@@ -37,22 +37,19 @@ const ChatInterface = () => {
     dispatch(addMessage(userMessage));
     setInputMessage('')
 
-    dispatch(sendMessage({ message: inputMessage, conversationHistory: chatHistory.concat(userMessage) }));
+    dispatch(messageSend({ message: inputMessage, conversationHistory: chatHistory.concat(userMessage) }));
   }
 
   const clearChat = async () => {
-    try {
-      await axios.delete('/api/chat/clear')
-      setMessages([])
-    } catch (error) {
-      console.error('Failed to clear chat:', error)
-    }
+    dispatch(clearChatHistory());
+    
+      // setMessages([])
+      setInputMessage('')
   }
 
   const copyMessage = (text) => {
     navigator.clipboard.writeText(text)
   }
-  console.log("mess",messages)
 
   return (
     <div className="max-w-4xl mx-auto h-screen flex flex-col">
