@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Brain, Mail, Lock, User, Eye, EyeOff } from 'lucide-react'
 import { loginUser, registerUser } from '../store/slices/authSlice'
+import { useSelector } from 'react-redux'
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -10,8 +11,7 @@ const Login = () => {
     email: '',
     password: ''
   })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const {user,loading,error} =  useSelector((state) => state.auth);
 
 const handleChange = (e) => {
     setFormData({
@@ -29,7 +29,7 @@ const handleChange = (e) => {
       const result = isLogin 
         ? await loginUser(formData.email, formData.password)
         : await registerUser(formData.name, formData.email, formData.password)
-
+      console.log("res::::",result.success);
       if (!result.success) {
         setError(result.error)
       }
@@ -39,7 +39,7 @@ const handleChange = (e) => {
     
     setLoading(false)
   }
-
+ console.log("errr",error)
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">

@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
+import { handleApiError } from '../../utils/handleApiError';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -12,7 +13,7 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem('user', JSON.stringify(response.data.user));
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(handleApiError(error));
     }
     }
 );
